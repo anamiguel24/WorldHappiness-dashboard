@@ -4,91 +4,7 @@ from dash import dcc
 from dash import html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
-<<<<<<< HEAD
 import plotly.graph_objs as go
-=======
-
-import pandas as pd
-import plotly.graph_objs as go
-
-
-############## Dataset Processing ##############
-
-ds = pd.read_csv('dataset.csv')
-
-ds.rename(columns={'Economy':'Economy (GDP per capita)', 'Family':'Social Support', 'Health':'Healthy Life Expectancy',
-                     'Trust':'Corruption'}, inplace=True)  # Renaming columns
-
-ds.drop(columns='Dystopia', inplace=True)  # Dropping column 'Dystopia'
-
-
-############## Dash Core Components ##############
-
-country_options = [dict(label=country, value=country) for country in ds['Country'].unique()]
-
-continent_options = [{'label': 'Global', 'value': 'world'}, {'label': 'Europe', 'value': 'europe'},
-                     {'label': 'Asia', 'value': 'asia'}, {'label': 'Africa', 'value': 'africa'},
-                     {'label': 'North America', 'value': 'north america'}, {'label': 'South America', 'value': 'south america'}]
-
-happiness_options = [dict(label=happiness, value=happiness) for happiness in ['Happiness Rank', 'Happiness Score']]
-
-factor_options = [dict(label=factor, value=factor) for factor in ['Economy (GDP per capita)', 'Social Support',
-                                                'Healthy Life Expectancy', 'Freedom', 'Generosity', 'Corruption']]
-
-dropdown_country = dcc.Dropdown(
-        id='country_drop',
-        options=country_options,
-        value=['Portugal'],
-        multi=True
-    )
-
-dropdown_continent = dcc.Dropdown(
-        id='continent_drop',
-        clearable=False,
-        searchable=False,
-        options=continent_options,
-        value='world',
-    )
-
-checklist_factor = dbc.Checklist(
-    id='checklist_factor',
-    options=factor_options,
-    value=['Economy (GDP per capita)', 'Social Support'],
-    switch=True#,
-    #input_checked_style={"backgroundColor": "#08BA14"}
-)
-
-buttons_year = html.Div(
-    [
-        dbc.RadioItems(
-            id="buttons_year",
-            className="btn-group",
-            inputClassName="btn-check",
-            labelClassName="btn btn-outline-primary",
-            labelCheckedClassName="active",
-            options=[
-                {"label": "2015", "value": 2015}, {"label": "2016", "value": 2016}, {"label": "2017", "value": 2017},
-                {"label": "2018", "value": 2018}, {"label": "2019", "value": 2019}, {"label": "2020", "value": 2020},
-                {"label": "2021", "value": 2021}, {"label": "2022", "value": 2022}, {"label": "2023", "value": 2023}
-            ],
-            value=2023,
-            style={'padding-left': '0',},
-            labelStyle={
-                'border-top-right-radius': '0',
-                'border-bottom-right-radius': '0',
-                'border-top-left-radius': '0',
-                'border-bottom-left-radius': '0',
-                'margin-left': '-1px',
-            },
-        ),
-        html.Div(id="output"),
-    ],
-    className="radio-group",
-)
-
-
-
->>>>>>> 5274999ae9fbda1359ab8f62a80684f036f44877
 
 ############## Dataset Processing ##############
 df = pd.read_csv('dataset.csv')
@@ -209,7 +125,6 @@ app.layout = html.Div([
             dbc.Col([
                 html.Br(),
                 dbc.Container([
-<<<<<<< HEAD
                     dbc.Row(
                         [
                             html.Div(dropdown_continent, style={'flex': '1'}, className='drop'),
@@ -217,13 +132,6 @@ app.layout = html.Div([
                         ],
                         style={'display': 'flex', 'padding-right': '10%', 'padding-left': '10%','padding-bottom':'1%'}
                     ),
-=======
-                    dbc.Row([
-                        html.Div([
-                            buttons_year], style={'width': '60%'}, className='pretty_box'),
-                        html.Div([dropdown_continent],
-                                 style={'width': '40%'}, className='pretty_box')], style={'display': 'flex','width': '60%','padding-right':'20%','padding-left':'20%'}),
->>>>>>> 5274999ae9fbda1359ab8f62a80684f036f44877
                     html.Center(dcc.Graph(id='Choropleth Map'))
                 ])
             ], className='container-box'),
@@ -352,7 +260,6 @@ app.layout = html.Div([
 
 @app.callback(
     Output('Choropleth Map', 'figure'),
-<<<<<<< HEAD
     Output('top5_bar', 'figure'),
     Output('bottom5_bar', 'figure'),
 
@@ -363,15 +270,6 @@ app.layout = html.Div([
 def update_graph(year, continent):
     # CHOROPLETH MAP
     ds_filtered_year = df.loc[df['Year']==year]
-=======
-
-    [Input('buttons_year', 'value'),
-     Input('continent_drop', 'value')]
-)
-
-def update_graph(year, continent):
-    ds_filtered_year = ds.loc[ds['Year']==year]
->>>>>>> 5274999ae9fbda1359ab8f62a80684f036f44877
 
     data_choropleth = dict(type='choropleth',
                            locations=ds_filtered_year['Country'],
@@ -400,7 +298,6 @@ def update_graph(year, continent):
                              #paper_bgcolor='rgba(0,0,0,0)',
                              #plot_bgcolor='rgba(0,0,0,0)'
                              )
-<<<<<<< HEAD
 
     # BAR CHARTS
     ds_filtered_continent = ds_filtered_year
@@ -548,6 +445,7 @@ def update_radar_plot(country, year):
 def update_top3(factors):
     factors.insert(0,'Country')
     df_filtered_factors=df.loc[df['Year']==2023,factors]
+    #df_filtered_factors=df.loc[df['Year']==2023,factors].select_dtypes(include='number')
     df_filtered_factors['sum'] = df_filtered_factors.sum(axis=1)
     df_filtered_factors.sort_values('sum',ascending=False, inplace=True)
 
@@ -567,9 +465,6 @@ def update_top3(factors):
     flag_country3 = html.Img(src=url_3, style={'width': '100px', 'height': 'auto'})
 
     return country1, flag_country1, country2, flag_country2, country3, flag_country3
-=======
-    return go.Figure(data=data_choropleth, layout=layout_choropleth)
->>>>>>> 5274999ae9fbda1359ab8f62a80684f036f44877
 
 
 if __name__ == '__main__':
