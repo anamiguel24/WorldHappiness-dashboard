@@ -284,6 +284,7 @@ app.layout = html.Div([
 
 ################################ LAYOUT GRAPHIC Nº8 (Top 3 Countries with Flags) ######################
         dbc.Container([
+            html.Br(),
             dbc.Row(dbc.Container(
                 [html.Br(),
                  html.H2('What are the best countries for you in 2023?',style={'textAlign': 'center','font-family':'Serif','color':'LightSteelBlue'})],
@@ -306,7 +307,10 @@ app.layout = html.Div([
                     html.H2(id='country3'),
                     html.H2(id='flag3')
                 ], className='pretty_box', style={'flex': '1', 'display': 'inline-block'}),
-            ], )
+
+            ]),
+            html.Br(),
+            html.Br(),
         ]),
 
         ##
