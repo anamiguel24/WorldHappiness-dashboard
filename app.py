@@ -124,6 +124,7 @@ buttons_year = html.Div([
 
 ############## The app itself ##############
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.LITERA])
+server = app.server
 
 ################################ HEADER ######################
 app.layout = html.Div([
