@@ -1,4 +1,6 @@
 gunicorn
+requests
+dash_renderer
 pandas
 numpy
 dash
