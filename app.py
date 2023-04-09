@@ -36,7 +36,7 @@ factor_options = [dict(label=factor, value=factor) for factor in ['Economy (GDP 
 dropdown_country = dcc.Dropdown(
         id='country_drop',
         options=country_options,
-        value=['Portugal'],
+        value=['Portugal','Germany','China'],
         multi=True,
         clearable=False
     )
@@ -430,9 +430,9 @@ def update_graph(year,factor_1, factor_2):
     y_axis=ds_bubble_year[factor_2]
 
     fig = px.scatter(ds_bubble_year, x=x_axis, y=y_axis,size="Happiness Score",
-                     hover_name="Country", log_x=False, size_max=5,height=350)
+                     hover_name="Country", log_x=False, size_max=5, height=350)
 
-    fig.update_traces(mode='markers', marker=dict(sizemode="diameter",sizemin=1))
+    fig.update_traces(mode='markers', marker=dict(sizemode="diameter", sizemin=1))
     fig.update_layout(paper_bgcolor='#f9f9f9',plot_bgcolor='#f9f9f9')
 
     return fig
@@ -540,8 +540,8 @@ def plots(country,factor):
         x_year_factor = df_factor['Year']
         y_factor = df_factor[factor]
 
-        data_rank.append(dict(type='scatter', x=x_year_rank, y=y_rank, name=country))
-        data_factor.append(dict(type='scatter', x=x_year_factor, y=y_factor, name=country))
+        data_rank.append(dict(type='scatter', x=x_year_rank, y=y_rank, name=country, hovertemplate='Year: %{x}\n Happiness Rank: %{y}'))
+        data_factor.append(dict(type='scatter', x=x_year_factor, y=y_factor, name=country, hovertemplate='Year: %{x}\n Factor: %{y}'))
 
     layout_rank = dict(
                       xaxis=dict(title='Year'),
